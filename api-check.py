@@ -39,6 +39,7 @@ createScanTaskUrl = rootUrl + '/analysis/createScanTask'
 scanParametrs = {
     'file_uri': scanId,
     'file_name': fileName,
+    'cache_enabled': True,
     'short_result': True,
     'options': {
         'analysis_depth': 5,
@@ -59,3 +60,8 @@ response = requests.post(createScanTaskUrl, json=scanParametrs, verify=False, he
 response.raise_for_status()
 scanId = response.json()['data']['scan_id']
 print(f'Задача создана. ID - {scanId}')
+
+checkResultsUrl = rootUrl + '/analysis/checkTask'
+response = requests.post(checkResultsUrl, json={'task_id': scanId}, verify=False, headers={'X-API-Key': token})
+response.raise_for_status()
+print(response.json())
