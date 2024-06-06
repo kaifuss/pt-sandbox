@@ -24,7 +24,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 currentDirectory = os.getcwd()
 fileName = 'getinfo.bat'
-fileToUpload = open(currentDirectory + fileName, 'rb')
+fileToUpload = open(currentDirectory + '/'+ fileName, 'rb')
 rootUrl = 'https://10.1.37.15/api/v1'
 token = getpass.getpass(prompt='Token: ')
 
