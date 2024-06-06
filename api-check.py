@@ -40,7 +40,7 @@ scanParametrs = {
     'file_uri': scanId,
     'file_name': fileName,
     'cache_enabled': True,
-    'short_result': True,
+    'short_result': False,
     'options': {
         'analysis_depth': 5,
         'passwords_for_unpack': ['infected'],
