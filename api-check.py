@@ -1,3 +1,19 @@
+import importlib
+import sys
+import subprocess
+required_libraries = ['getpass', 'json','os', 'requests', 'urllib3']
+for lib in required_libraries:
+    try:
+        importlib.import_module(lib)
+    except ImportError:
+        print(f"{lib} не установлена. Устанавливаем...")
+        try:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', lib])
+            print(f"{lib} успешно установлена.")
+        except Exception as e:
+            print(f"Ошибка при установке {lib}: {e}\n Скрипт будет остановлен. Попробуйте установить {lib} вручную")
+            sys.exit()
+
 import requests
 import os
 import urllib3
