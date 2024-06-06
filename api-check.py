@@ -28,13 +28,15 @@ fileToUpload = open(currentDirectory + '/'+ fileName, 'rb')
 rootUrl = 'https://10.1.37.15/api/v1'
 token = getpass.getpass(prompt='Token: ')
 
+print(f'\nФайл {fileName} отправляется на PT SandBox...')
 uploadFileToScanUrl = rootUrl + '/storage/uploadScanFile'
 response = requests.post(uploadFileToScanUrl, files={'file': fileToUpload}, verify=False, headers={'X-API-Key': token})
 response.raise_for_status()
 scanId = response.json()['data']['file_uri']
-print(f'Файл {fileName} загружен. ID - {scanId}')
+print(f'Файл {fileName} загружен. ID - {scanId}\n')
 fileToUpload.close()
 
+print('Создается задача на проверку...')
 createScanTaskUrl = rootUrl + '/analysis/createScanTask'
 scanParametrs = {
     'file_uri': scanId,
@@ -55,13 +57,14 @@ scanParametrs = {
         }
     }
 }
-
 response = requests.post(createScanTaskUrl, json=scanParametrs, verify=False, headers={'X-API-Key': token})
 response.raise_for_status()
 scanId = response.json()['data']['scan_id']
-print(f'Задача создана. ID - {scanId}')
+print(f'Задача создана. ID - {scanId}\n')
 
+print('Получение результатов проверки...')
 checkResultsUrl = rootUrl + '/analysis/checkTask'
 response = requests.post(checkResultsUrl, json={'scan_id': scanId}, verify=False, headers={'X-API-Key': token})
 response.raise_for_status()
-print(response.json())
+print('Результат получен:')
+print(json.dumps(response.json(), indent=4))
