@@ -36,12 +36,15 @@ scanId = response.json()['data']['file_uri']
 print(f'Файл {fileName} загружен. ID - {scanId}\n')
 fileToUpload.close()
 
-print('Создается задача на проверку...')
+cacheEnabled = False
+if (input('Использовать результаты предыдущих проверок? (y/n): ') == 'y'): cacheEnabled = True
+
+print('\nСоздается задача на проверку...')
 createScanTaskUrl = rootUrl + '/analysis/createScanTask'
 scanParametrs = {
     'file_uri': scanId,
     'file_name': fileName,
-    'cache_enabled': True,
+    'cache_enabled': cacheEnabled,
     'short_result': False,
     'options': {
         'analysis_depth': 5,
