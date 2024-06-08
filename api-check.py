@@ -68,9 +68,6 @@ scanParametrs = {
         }
     }
 }
-
-print('\n' + json.dumps(scanParametrs, indent=4) + '\n')
-
 startScanResponse = requests.post(createScanTaskUrl, json=scanParametrs, verify=False, headers={'X-API-Key': token})
 startScanResponse.raise_for_status()
 scanId = startScanResponse.json()['data']['scan_id']
